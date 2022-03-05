@@ -10,39 +10,6 @@ const client = StompJs.Client = StompJs.over(socket);
 
 function Home() {
 
-    useEffect(() => {
-        client.connect(
-            {}, // 헤더
-            () => { // 연결 시작시 콜백
-
-                var now = new Date();
-                
-                // 연결확인 송신
-                client.send(
-                    '/connect',             // 소켓서버주소
-                    {},                     // 헤더
-                    JSON.stringify(now)    // 바디
-                );
-
-                // 연결확인 수신
-                client.subscribe(
-                    '/topic/connect',    // 구독주소
-                    (res) => {  // 콜백
-                        console.log(res.body);
-                    }
-                );
-
-                // 상태변경 수신
-                client.subscribe(
-                    '/topic/change/fireStatus',
-                    (res) => {
-                        setTables(JSON.parse(res.body));
-                    }
-                );
-            }
-        );
-    }, []);
-
     // state
     const [tables, setTables] = useState([
         { "id": 1, "fireStatus": "OFF" },
@@ -51,6 +18,51 @@ function Home() {
         { "id": 4, "fireStatus": "ON" }
     ]);
 
+    // effect
+    useEffect(() => {
+        client.connect(
+            // header
+            {},
+            // callback
+            () => { 
+                
+                // 연결확인 송신
+                client.send(
+                    // host
+                    '/connect', 
+                    // header
+                    {}, 
+                    // body
+                    JSON.stringify({
+                        "clientTime" : new Date(),
+                        "tables" : tables
+                    })
+                );
+
+                // 연결확인 수신
+                client.subscribe(
+                    // 구독 host
+                    '/topic/connect',
+                    // callback
+                    (res) => {
+                        console.log(res.body);
+                        res = JSON.parse(res.body);
+                        setTables(res.tables);
+                    }
+                );
+
+                // 상태변경 수신
+                client.subscribe(
+                    '/topic/change/fireStatus',
+                    (res) => {
+                        res = JSON.parse(res.body);
+                        setTables(res.tables);
+                    }
+                );
+            }
+        );
+    }, []);
+
     // onClick
     const changeFireStatus = (targetId) => {
         client.send(
@@ -58,7 +70,6 @@ function Home() {
             {},
             JSON.stringify({
                 "targetId" : targetId,
-                "tables" : tables
             })
         )
     }

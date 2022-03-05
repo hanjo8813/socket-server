@@ -1,7 +1,10 @@
 package com.example.socketserver.dto;
 
+import java.util.List;
+import lombok.Builder;
 import lombok.Getter;
 
+@Builder
 @Getter
 public class TableDto {
 
@@ -15,5 +18,4 @@ public class TableDto {
             this.fireStatus = FireStatus.ON;
         }
     }
-
 }

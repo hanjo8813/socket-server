@@ -1,13 +1,13 @@
-package com.example.socketserver.dto;
+package com.example.socketserver.dto.request;
 
+import com.example.socketserver.dto.TableDto;
 import java.util.List;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @Getter
-public class ChangeStatusRequest {
+public class ChangeFireStatusRequest {
 
     private Long targetId;
-    private List<TableDto> tables;
 }
