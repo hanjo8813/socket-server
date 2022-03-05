@@ -32,46 +32,36 @@ function Home() {
                     }
                 );
 
-                // client.subscribe(
-                //     '/topic/change',    // 구독주소
-                //     (res) => {  // 콜백
-                //     }
-                // );
+                // 상태변경 수신
+                client.subscribe(
+                    '/topic/change/fireStatus',
+                    (res) => {
+                        setTables(JSON.parse(res.body));
+                    }
+                );
             }
         );
     }, []);
 
     // state
     const [tables, setTables] = useState([
-        { "id": 1, "status": "blue" },
-        { "id": 2, "status": "blue" },
-        { "id": 3, "status": "blue" },
-        { "id": 4, "status": "red" }
+        { "id": 1, "fireStatus": "OFF" },
+        { "id": 2, "fireStatus": "OFF" },
+        { "id": 3, "fireStatus": "OFF" },
+        { "id": 4, "fireStatus": "ON" }
     ]);
 
     // onClick
-    const sendStatus = (id) => {
+    const changeFireStatus = (targetId) => {
         client.send(
-            'change',
+            '/change/fireStatus',
             {},
             JSON.stringify({
-                "id" : id,
+                "targetId" : targetId,
                 "tables" : tables
             })
         )
     }
-
-
-    // const changeStatus = (id, status) => {
-    //     var temp = [];
-    //     for(var table of tables){
-    //         if(table.id === id){
-    //             table.status = status;
-    //         }
-    //         temp.push(table);
-    //     }
-    //     setTables(temp);
-    // }
 
     return (
         <div>
@@ -81,11 +71,11 @@ function Home() {
 
             {
                 tables.map(v => {
-                    if (v.status === "blue") {
-                        return (<button className='table_blue' onClick={() => sendStatus(v.id, "red")} key={v.id}>{v.id}</button>);
+                    if (v.fireStatus === "OFF") {
+                        return (<button className='table_blue' onClick={() => changeFireStatus(v.id, v.fireStatus)} key={v.id}>{v.id}</button>);
                     }
                     else {
-                        return (<button className='table_red' onClick={() => sendStatus(v.id, "blue")} key={v.id}>{v.id}</button>);
+                        return (<button className='table_red' onClick={() => changeFireStatus(v.id, v.fireStatus)} key={v.id}>{v.id}</button>);
                     }
                 })
             }
