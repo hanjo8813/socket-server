@@ -53,6 +53,17 @@ function Home() {
                     }
                 );
 
+                // 타 세션 연결종료 수신
+                client.subscribe(
+                    '/topic/disconnect',
+                    (res) => {
+                        console.log(res.body);
+                        res = JSON.parse(res.body);
+                        setSessionCount(res.sessionCount);
+                    }
+                );
+
+
                 // 불 상태변경 수신
                 client.subscribe(
                     '/topic/change/fireStatus',

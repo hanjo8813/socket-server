@@ -7,12 +7,12 @@ import lombok.Getter;
 
 @Builder
 @Getter
-public class ChangeFireStatusResponse {
+public class TableResponse {
 
     private List<TableDto> tables;
 
-    public static ChangeFireStatusResponse of(List<TableDto> tables) {
-        return ChangeFireStatusResponse.builder()
+    public static TableResponse of(List<TableDto> tables) {
+        return TableResponse.builder()
             .tables(tables)
             .build();
     }

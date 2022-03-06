@@ -1,9 +1,8 @@
 package com.example.socketserver.controller;
 
-import com.example.socketserver.common.GlobalVariables;
 import com.example.socketserver.dto.request.ChangeFireStatusRequest;
 import com.example.socketserver.dto.request.ConnectRequest;
-import com.example.socketserver.dto.response.ChangeFireStatusResponse;
+import com.example.socketserver.dto.response.TableResponse;
 import com.example.socketserver.dto.response.ConnectResponse;
 import com.example.socketserver.dto.response.SocketResponse;
 import com.example.socketserver.service.SocketService;
@@ -34,8 +33,8 @@ public class SocketController {
     // 테이블 status 변경
     @MessageMapping("/change/fireStatus")
     @SendTo("/topic/change/fireStatus")
-    public SocketResponse<ChangeFireStatusResponse> changeFireStatus(ChangeFireStatusRequest request) {
-        ChangeFireStatusResponse response = service.changeFireStatus(request);
+    public SocketResponse<TableResponse> changeFireStatus(ChangeFireStatusRequest request) {
+        TableResponse response = service.changeFireStatus(request);
         return SocketResponse.of(response);
     }
 }
