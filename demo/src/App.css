@@ -3,6 +3,13 @@ body {
   text-align: center;
 }
 
+.info{
+  display: inline-block;
+  text-align: left;
+  padding:10px;
+  border: solid 1px black;
+}
+
 
 .table_blue{
   display: inline-block;

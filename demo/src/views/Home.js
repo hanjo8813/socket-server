@@ -22,12 +22,12 @@ function Home() {
 
     // effect
     useEffect(() => {
-                
+
         client.connect(
             // header
             {},
             // callback
-             () => { 
+            () => {
 
                 // 연결확인 수신
                 client.subscribe(
@@ -41,17 +41,17 @@ function Home() {
                         setTables(res.data.tables);
                     }
                 );
-                
+
                 // 연결확인 송신
-                 client.send(
+                client.send(
                     // host
-                    '/connect', 
+                    '/connect',
                     // header
-                    {}, 
+                    {},
                     // body
                     JSON.stringify({
-                        "clientTime" : new Date(),
-                        "tables" : tables
+                        "clientTime": new Date(),
+                        "tables": tables
                     })
                 );
 
@@ -84,7 +84,7 @@ function Home() {
             '/change/fireStatus',
             {},
             JSON.stringify({
-                "targetId" : targetId,
+                "targetId": targetId,
             })
         )
     }
@@ -92,8 +92,17 @@ function Home() {
     return (
         <div>
 
-            <h2>Demo (탭 두개 열어서 테스트)</h2>
-            <hr /><br />
+            <h2>Demo</h2>
+            <div className='info'>
+                <ul>
+                    <li>탭을 여러개 열어서 테스트한다.</li>
+                    <li>03:00 ~ 13:00 사이에는 heroku 서버가 sleep 상태이므로, 최초 연결시까지 최대 15초 소요</li>
+                    <li>세션 수가 1 이상이 되어야 정상적으로 연결 완료</li>
+                </ul>
+
+            </div>
+
+            <br /><br /><br />
 
             {
                 tables.map(v => {
@@ -106,7 +115,7 @@ function Home() {
                 })
             }
 
-            <br/><br/>
+            <br /><br />
 
             <div>현재 연결 세션 수 : {sessionCount}</div>
 
