@@ -2,15 +2,12 @@ package com.example.socketserver.common.config;
 
 import com.example.socketserver.common.GlobalVariables;
 import com.example.socketserver.common.event.DisconnectEvent;
-import com.example.socketserver.dto.response.SocketResponse;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageChannel;
-import org.springframework.messaging.handler.annotation.SendTo;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.messaging.support.ChannelInterceptor;
 
