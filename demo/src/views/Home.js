@@ -96,8 +96,8 @@ function Home() {
             <div className='info'>
                 <ul>
                     <li>탭을 여러개 열어서 테스트한다.</li>
-                    <li>03:00 ~ 13:00 사이에는 heroku 서버가 sleep 상태이므로, 최초 연결시까지 최대 15초 소요</li>
                     <li>세션 수가 1 이상이 되어야 정상적으로 연결 완료</li>
+                    <li>03:00 ~ 13:00 사이에는 heroku 서버가 sleep 상태이므로, 최초 연결시까지 최대 15초 소요</li>
                 </ul>
 
             </div>
@@ -115,9 +115,20 @@ function Home() {
                 })
             }
 
-            <br /><br />
+            <br /><br /><br />
 
-            <div>현재 연결 세션 수 : {sessionCount}</div>
+            {(
+                () => {
+                    if (sessionCount === 0) {
+                        return (<div><b>소켓 연결중 .....</b></div>);
+                    }
+                    else {
+                        return (<div><b>현재 연결 세션 수 : {sessionCount}</b></div>);
+                    }
+                }
+            )()}
+
+
 
         </div>
     );
