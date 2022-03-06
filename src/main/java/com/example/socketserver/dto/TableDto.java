@@ -12,10 +12,13 @@ public class TableDto {
     private FireStatus fireStatus;
 
     public void changeFireStatus() {
-        if (this.fireStatus == FireStatus.ON) {
-            this.fireStatus = FireStatus.OFF;
-        } else {
-            this.fireStatus = FireStatus.ON;
+        switch (this.fireStatus){
+            case ON:
+                this.fireStatus = FireStatus.OFF;
+                break;
+            case OFF:
+                this.fireStatus = FireStatus.ON;
+                break;
         }
     }
 }

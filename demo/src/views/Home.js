@@ -17,6 +17,7 @@ function Home() {
         { "id": 3, "fireStatus": "OFF" },
         { "id": 4, "fireStatus": "ON" }
     ]);
+    const [sessionCount, setSessionCount] = useState(0);
 
     // effect
     useEffect(() => {
@@ -47,16 +48,18 @@ function Home() {
                     (res) => {
                         console.log(res.body);
                         res = JSON.parse(res.body);
-                        setTables(res.tables);
+                        setSessionCount(res.sessionCount);
+                        setTables(res.data.tables);
                     }
                 );
 
-                // 상태변경 수신
+                // 불 상태변경 수신
                 client.subscribe(
                     '/topic/change/fireStatus',
                     (res) => {
                         res = JSON.parse(res.body);
-                        setTables(res.tables);
+                        setSessionCount(res.sessionCount);
+                        setTables(res.data.tables);
                     }
                 );
             }
@@ -90,6 +93,10 @@ function Home() {
                     }
                 })
             }
+
+            <br/><br/>
+
+            <div>현재 연결 세션 수 : {sessionCount}</div>
 
         </div>
     );
