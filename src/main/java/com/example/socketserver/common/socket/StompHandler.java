@@ -1,4 +1,4 @@
-package com.example.socketserver.common.config;
+package com.example.socketserver.common.socket;
 
 import com.example.socketserver.common.GlobalVariables;
 import com.example.socketserver.common.event.DisconnectEvent;

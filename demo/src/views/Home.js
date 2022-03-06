@@ -4,9 +4,10 @@ import StompJs from 'stompjs';
 
 // init socket
 
-const socketUrl = "http://localhost:8080/ws"
+const socketUrl = "https://kkakdduk.herokuapp.com/ws"
 const socket = new SockJS(socketUrl);
 const client = StompJs.Client = StompJs.over(socket);
+
 
 function Home() {
 
@@ -21,24 +22,12 @@ function Home() {
 
     // effect
     useEffect(() => {
+                
         client.connect(
             // header
             {},
             // callback
-            () => { 
-                
-                // 연결확인 송신
-                client.send(
-                    // host
-                    '/connect', 
-                    // header
-                    {}, 
-                    // body
-                    JSON.stringify({
-                        "clientTime" : new Date(),
-                        "tables" : tables
-                    })
-                );
+             () => { 
 
                 // 연결확인 수신
                 client.subscribe(
@@ -52,6 +41,19 @@ function Home() {
                         setTables(res.data.tables);
                     }
                 );
+                
+                // 연결확인 송신
+                 client.send(
+                    // host
+                    '/connect', 
+                    // header
+                    {}, 
+                    // body
+                    JSON.stringify({
+                        "clientTime" : new Date(),
+                        "tables" : tables
+                    })
+                );
 
                 // 타 세션 연결종료 수신
                 client.subscribe(
@@ -62,7 +64,6 @@ function Home() {
                         setSessionCount(res.sessionCount);
                     }
                 );
-
 
                 // 불 상태변경 수신
                 client.subscribe(
@@ -91,7 +92,7 @@ function Home() {
     return (
         <div>
 
-            <h2>Demo</h2>
+            <h2>Demo (탭 두개 열어서 테스트)</h2>
             <hr /><br />
 
             {
