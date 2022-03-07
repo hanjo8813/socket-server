@@ -5,11 +5,15 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.Vector;
+import java.util.concurrent.ConcurrentHashMap;
 
+// 싱글톤 패턴 적용
 public class GlobalVariables {
 
-    private static final Set<String> sessions = new HashSet<>();
-    private static List<TableDto> serverTables = new ArrayList<>();
+    // 멀티스레드 thread safe 처리
+    private static final Set<String> sessions = ConcurrentHashMap.newKeySet();
+    private static List<TableDto> serverTables = new Vector<>();
 
     public static List<TableDto> getTables(){
         return serverTables;
