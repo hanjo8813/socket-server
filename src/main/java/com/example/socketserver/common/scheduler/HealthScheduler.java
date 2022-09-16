@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.HashMap;
 import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -28,9 +29,11 @@ public class HealthScheduler {
     }
 
     private static final String NAVER_URL = "http://api.booking.naver.com/v3.0/businesses/562202/biz-items/4030151/daily-schedules?lang=ko&endDateTime=2022-11-05T00:00:00&isRestaurant=false&startDateTime=2022-09-25T00:00:00";
-    private static final String BOT = "https://hooks.slack.com/services/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";
 
-    @Scheduled(cron = "0 0/10 * * * *", zone = "Asia/Seoul")
+    @Value("${SLACK_URL}")
+    private String BOT;
+
+    @Scheduled(cron = "0/30 * * * * *", zone = "Asia/Seoul")
     public void temp() throws JsonProcessingException {
         ResponseEntity<String> response = restTemplate.getForEntity(NAVER_URL, String.class);
 
