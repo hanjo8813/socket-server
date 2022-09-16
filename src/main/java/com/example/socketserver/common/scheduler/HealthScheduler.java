@@ -37,6 +37,8 @@ public class HealthScheduler {
     public void temp() throws JsonProcessingException {
         ResponseEntity<String> response = restTemplate.getForEntity(NAVER_URL, String.class);
 
+        log.info("{}", BOT);
+
         ObjectMapper mapper = new ObjectMapper();
         JsonNode root = mapper.readTree(response.getBody());
         JsonNode target = root.path("2022-10-09");
