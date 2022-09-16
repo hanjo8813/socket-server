@@ -43,16 +43,15 @@ public class HealthScheduler {
         int stock = target.path("stock").asInt();
         int bookingCount = target.path("bookingCount").asInt();
 
+        log.info("예약 정보 확인 / stock : {} / bookingCount : {}", stock, bookingCount);
+
         if(stock <= bookingCount)
             return;
 
         Map<String,Object> request = new HashMap<>();
         request.put("text", "예약뜸~!~ https://m.booking.naver.com/booking/3/bizes/562202/items/4030151 여기서 빨리 예약 ㄱㄱ");
-//        request.put("text", String.format("배포 테스트 - stock : %d / bookingCount : %d", stock, bookingCount));
         HttpEntity<Map<String,Object>> entity = new HttpEntity<>(request);
         restTemplate.exchange(BOT, HttpMethod.POST, entity, String.class);
-
-        log.info("메시지 전송 완료 / stock : {} / bookingCount : {}", stock, bookingCount);
     }
 
 }
