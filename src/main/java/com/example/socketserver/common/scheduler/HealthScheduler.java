@@ -22,7 +22,7 @@ public class HealthScheduler {
     private final RestTemplate restTemplate = new RestTemplate();
 
     // 25분마다 refresh
-    @Scheduled(cron = "0 0/25 * * * *", zone = "Asia/Seoul")
+    @Scheduled(cron = "0 0/5 * * * *", zone = "Asia/Seoul")
     public void healthCheck() {
         ResponseEntity<String> response = restTemplate.getForEntity(URL, String.class);
         log.info("{}", response.getBody());
