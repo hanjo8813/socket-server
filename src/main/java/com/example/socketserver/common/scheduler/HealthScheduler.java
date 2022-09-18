@@ -36,22 +36,30 @@ public class HealthScheduler {
     @Scheduled(cron = "0 0/5 * * * *", zone = "Asia/Seoul")
     public void temp() throws JsonProcessingException {
         ResponseEntity<String> response = restTemplate.getForEntity(NAVER_URL, String.class);
-
         ObjectMapper mapper = new ObjectMapper();
         JsonNode root = mapper.readTree(response.getBody());
-        JsonNode target = root.path("2022-10-09");
-        int stock = target.path("stock").asInt();
-        int bookingCount = target.path("bookingCount").asInt();
 
-        log.info("예약 정보 확인 / stock : {} / bookingCount : {}", stock, bookingCount);
+        JsonNode target1 = root.path("2022-10-08");
+        int stock1 = target1.path("stock1").asInt();
+        int bookingCount1 = target1.path("bookingCount1").asInt();
+        log.info("예약 정보 확인 / stock1 : {} / bookingCount1 : {}", stock1, bookingCount1);
 
-        if(stock <= bookingCount)
-            return;
+        JsonNode target2 = root.path("2022-10-09");
+        int stock2 = target2.path("stock2").asInt();
+        int bookingCount2 = target2.path("bookingCount2").asInt();
+        log.info("예약 정보 확인 / stock2 : {} / bookingCount2 : {}", stock2, bookingCount2);
 
         Map<String,Object> request = new HashMap<>();
-        request.put("text", "예약뜸~!~ https://m.booking.naver.com/booking/3/bizes/562202/items/4030151 여기서 빨리 예약 ㄱㄱ");
-        HttpEntity<Map<String,Object>> entity = new HttpEntity<>(request);
-        restTemplate.exchange(BOT, HttpMethod.POST, entity, String.class);
+        if(stock1 > bookingCount1){
+            request.put("text", "토요일 예약뜸~!~ https://m.booking.naver.com/booking/3/bizes/562202/items/4030151 여기서 빨리 예약 ㄱㄱ");
+            HttpEntity<Map<String,Object>> entity = new HttpEntity<>(request);
+            restTemplate.exchange(BOT, HttpMethod.POST, entity, String.class);
+        }
+        if(stock2 > bookingCount2){
+            request.put("text", "일요일 예약뜸~!~ https://m.booking.naver.com/booking/3/bizes/562202/items/4030151 여기서 빨리 예약 ㄱㄱ");
+            HttpEntity<Map<String,Object>> entity = new HttpEntity<>(request);
+            restTemplate.exchange(BOT, HttpMethod.POST, entity, String.class);
+        }
     }
 
 }
