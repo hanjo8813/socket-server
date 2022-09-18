@@ -40,13 +40,13 @@ public class HealthScheduler {
         JsonNode root = mapper.readTree(response.getBody());
 
         JsonNode target1 = root.path("2022-10-08");
-        int stock1 = target1.path("stock1").asInt();
-        int bookingCount1 = target1.path("bookingCount1").asInt();
+        int stock1 = target1.path("stock").asInt();
+        int bookingCount1 = target1.path("bookingCount").asInt();
         log.info("예약 정보 확인 / stock1 : {} / bookingCount1 : {}", stock1, bookingCount1);
 
         JsonNode target2 = root.path("2022-10-09");
-        int stock2 = target2.path("stock2").asInt();
-        int bookingCount2 = target2.path("bookingCount2").asInt();
+        int stock2 = target2.path("stock").asInt();
+        int bookingCount2 = target2.path("bookingCount").asInt();
         log.info("예약 정보 확인 / stock2 : {} / bookingCount2 : {}", stock2, bookingCount2);
 
         Map<String,Object> request = new HashMap<>();
