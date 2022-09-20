@@ -33,7 +33,7 @@ public class HealthScheduler {
     @Value("${SLACK_URL}")
     private String BOT;
 
-    @Scheduled(cron = "0 0/5 * * * *", zone = "Asia/Seoul")
+    @Scheduled(cron = "0 0/1 * * * *", zone = "Asia/Seoul")
     public void temp() throws JsonProcessingException {
         ResponseEntity<String> response = restTemplate.getForEntity(NAVER_URL, String.class);
         ObjectMapper mapper = new ObjectMapper();
