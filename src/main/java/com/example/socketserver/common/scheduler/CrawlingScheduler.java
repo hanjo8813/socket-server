@@ -66,8 +66,8 @@ public class CrawlingScheduler {
     public void camp() throws IOException {
         StringBuilder sb = new StringBuilder();
 
-        boolean siteB = searchCamp("https://baekdo.ticketplay.zone/portal/realtime/productSelect?room_area_no=11&stay_cnt=1&check_in=20221003&check_out=20221004", sb);
-        boolean siteC = searchCamp("https://baekdo.ticketplay.zone/portal/realtime/productSelect?room_area_no=12&stay_cnt=1&check_in=20221022&check_out=20221023", sb);
+        boolean siteB = searchCamp(CAMP_URL_B, sb);
+        boolean siteC = searchCamp(CAMP_URL_C, sb);
 
         if(!siteB && !siteC)
             return;
