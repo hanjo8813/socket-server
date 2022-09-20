@@ -35,6 +35,8 @@ public class CrawlingScheduler {
 
     @Scheduled(cron = "0 0/1 * * * *", zone = "Asia/Seoul")
     public void naver() throws JsonProcessingException {
+        log.info("산너머 스케줄러 실행");
+
         ResponseEntity<String> response = restTemplate.getForEntity(NAVER_URL, String.class);
         ObjectMapper mapper = new ObjectMapper();
         JsonNode root = mapper.readTree(response.getBody());
@@ -64,10 +66,11 @@ public class CrawlingScheduler {
 
     @Scheduled(cron = "0 0/1 * * * *", zone = "Asia/Seoul")
     public void camp() throws IOException {
+        log.info("백도 스케줄러 실행");
         StringBuilder sb = new StringBuilder();
 
-        boolean siteB = searchCamp(CAMP_URL_B, sb);
-        boolean siteC = searchCamp(CAMP_URL_C, sb);
+        boolean siteB = searchCamp("B", CAMP_URL_B, sb);
+        boolean siteC = searchCamp("C", CAMP_URL_C, sb);
 
         if(!siteB && !siteC)
             return;
@@ -80,15 +83,17 @@ public class CrawlingScheduler {
         restTemplate.exchange(BOT, HttpMethod.POST, entity, String.class);
     }
 
-    public boolean searchCamp(String url, StringBuilder sb) throws IOException {
+    public boolean searchCamp(String type, String url, StringBuilder sb) throws IOException {
         Connection conn = Jsoup.connect(url);
         Document document = conn.get();
         Elements campSites = document.select("div.right_box ul li label");
 
+        log.info("{}-캠핑장 예약 정보 확인 / 사이트 수 : {}", type, campSites.size());
+
         if(campSites.size() == 0)
             return false;
 
-        sb.append("캠핑장 떴다! 예약 -> ").append(url).append("\n");
+        sb.append(type).append("-캠핑장 떴다! 예약 -> ").append(url).append("\n");
 
         for(Element site : campSites){
             String target = site.text().split(" ")[0];
