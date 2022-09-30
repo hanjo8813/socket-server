@@ -117,8 +117,4 @@ public class CrawlingScheduler {
         sb.append("\n");
         return true;
     }
-
-    public boolean isAvailable(String target) {
-        if (target.equals("B캠핑장-8") ||)
-    }
 }
