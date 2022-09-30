@@ -71,16 +71,17 @@ public class CrawlingScheduler {
         StringBuilder sb = new StringBuilder();
 
         boolean siteB = searchCamp("B", CAMP_URL_B, sb);
-        boolean siteC = searchCamp("C", CAMP_URL_C, sb);
+//        boolean siteC = searchCamp("C", CAMP_URL_C, sb);
 
-        if(!siteB && !siteC)
+        if (!siteB) {
             return;
+        }
 
-        Map<String,Object> request = new HashMap<>();
-        request.put("text",sb.toString());
+        Map<String, Object> request = new HashMap<>();
+        request.put("text", sb.toString());
 
         RestTemplate restTemplate = new RestTemplate();
-        HttpEntity<Map<String,Object>> entity = new HttpEntity<>(request);
+        HttpEntity<Map<String, Object>> entity = new HttpEntity<>(request);
         restTemplate.exchange(BOT, HttpMethod.POST, entity, String.class);
     }
 
@@ -91,17 +92,33 @@ public class CrawlingScheduler {
 
         log.info("{}-캠핑장 예약 정보 확인 / 사이트 수 : {}", type, campSites.size());
 
-        if(campSites.size() == 0)
+        if (campSites.size() == 0) {
             return false;
+        }
 
         sb.append(type).append("-캠핑장 떴다! 예약 -> ").append(url).append("\n");
 
-        for(Element site : campSites){
+        for (Element site : campSites) {
             String target = site.text().split(" ")[0];
-            sb.append(target).append("\n");
+
+            if (target.equals("B캠핑장-7") ||
+                target.equals("B캠핑장-5") ||
+                target.equals("B캠핑장-4") ||
+                target.equals("B캠핑장-2") ||
+                target.equals("B캠핑장-1")
+            ) {
+                sb.append(target).append("\n");
+            }
+            else{
+                return false;
+            }
         }
 
         sb.append("\n");
         return true;
+    }
+
+    public boolean isAvailable(String target) {
+        if (target.equals("B캠핑장-8") ||)
     }
 }
